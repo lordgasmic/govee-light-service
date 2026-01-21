@@ -34,6 +34,11 @@ public class GoveeLightService {
 
     @PostConstruct
     public void getCurrentLampStatus() {
+        // start UDP Server in background
+        final UDPServer udpServer = new UDPServer(4002);
+        final Thread serverThread = new Thread(udpServer);
+        serverThread.start();
+
         final List<GoveeLightResponse> responses = addresses.stream().peek(ip -> log.info("IP: {}", ip)).map(ip -> connectToLight(ip, buildStatus())).toList();
         log.info("exit status");
     }
@@ -54,15 +59,15 @@ public class GoveeLightService {
             clientSocket.send(sendPacket);
 
             log.info("sent packet");
-
-            // Optional: Receive a response from the server
-            final byte[] receiveData = new byte[1024];
-            final DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length, localhost, listenPort);
-            clientSocket.receive(receivePacket);
-
-            log.info("received");
-            final String modifiedSentence = new String(receivePacket.getData(), 0, receivePacket.getLength());
-            log.info("Response from Server: {}", modifiedSentence);
+//
+//            // Optional: Receive a response from the server
+//            final byte[] receiveData = new byte[1024];
+//            final DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length, localhost, listenPort);
+//            clientSocket.receive(receivePacket);
+//
+//            log.info("received");
+//            final String modifiedSentence = new String(receivePacket.getData(), 0, receivePacket.getLength());
+//            log.info("Response from Server: {}", modifiedSentence);
 
         } catch (final IOException e) {
             log.error("Error trying to UDP", e);
