@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.lordgasmic.govee.models.GoveeLightRequest;
 import com.lordgasmic.govee.models.GoveeLightResponse;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class GoveeLightService {
 
-    @Value("govee.lights.lordgasmic")
+    @Value("${govee.lights.lordgasmic}")
     private List<String> addresses;
 
     private final Map<String, Boolean> statuses;
@@ -32,7 +34,7 @@ public class GoveeLightService {
 
     @PostConstruct
     public void getCurrentLampStatus() {
-        final List<GoveeLightResponse> responses = addresses.stream().map(ip -> connectToLight(ip, buildStatus())).toList();
+        final List<GoveeLightResponse> responses = addresses.stream().peek(ip -> log.info("IP: {}", ip)).map(ip -> connectToLight(ip, buildStatus())).toList();
     }
 
     public GoveeLightResponse connectToLight(final String ip, final GoveeLightRequest request) {
