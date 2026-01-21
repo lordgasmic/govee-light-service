@@ -12,7 +12,7 @@ import java.net.SocketException;
 public class UDPServer implements Runnable {
     private final DatagramSocket socket;
     private boolean running;
-    private final byte[] buffer = new byte[256];
+    private final byte[] buffer = new byte[1024];
 
     public UDPServer(final int port) {
         try {
