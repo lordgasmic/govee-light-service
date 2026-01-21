@@ -35,7 +35,7 @@ public class GoveeLightService {
     @PostConstruct
     public void getCurrentLampStatus() {
         // start UDP Server in background
-        final UDPServer udpServer = new UDPServer(4003);
+        final UDPServer udpServer = new UDPServer(4002);
         final Thread serverThread = new Thread(udpServer);
         serverThread.start();
 
