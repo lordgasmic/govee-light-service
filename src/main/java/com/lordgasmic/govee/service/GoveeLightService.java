@@ -35,9 +35,13 @@ public class GoveeLightService {
     @PostConstruct
     public void getCurrentLampStatus() {
         // start UDP Server in background
-        final UDPServer udpServer = new UDPServer(4003);
-        final Thread serverThread = new Thread(udpServer);
-        serverThread.start();
+        final UDPServer udpServer4002 = new UDPServer(4002);
+        final Thread serverThread4002 = new Thread(udpServer4002);
+        serverThread4002.start();
+
+        final UDPServer udpServer4003 = new UDPServer(4003);
+        final Thread serverThread4003 = new Thread(udpServer4003);
+        serverThread4003.start();
 
         final List<GoveeLightResponse> responses = addresses.stream().peek(ip -> log.info("IP: {}", ip)).map(ip -> connectToLight(ip, buildControl(1))).toList();
         log.info("exit status");
