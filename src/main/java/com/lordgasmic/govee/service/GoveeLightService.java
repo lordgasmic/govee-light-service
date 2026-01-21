@@ -35,6 +35,7 @@ public class GoveeLightService {
     @PostConstruct
     public void getCurrentLampStatus() {
         final List<GoveeLightResponse> responses = addresses.stream().peek(ip -> log.info("IP: {}", ip)).map(ip -> connectToLight(ip, buildStatus())).toList();
+        log.info("exit status");
     }
 
     public GoveeLightResponse connectToLight(final String ip, final GoveeLightRequest request) {
@@ -55,7 +56,7 @@ public class GoveeLightService {
             clientSocket.receive(receivePacket);
 
             final String modifiedSentence = new String(receivePacket.getData(), 0, receivePacket.getLength());
-            System.out.println("Response from Server: " + modifiedSentence);
+            log.info("Response from Server: {}", modifiedSentence);
 
         } catch (final IOException e) {
             e.printStackTrace();
