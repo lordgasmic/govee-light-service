@@ -39,7 +39,7 @@ public class GoveeLightService {
         final Thread serverThread = new Thread(udpServer);
         serverThread.start();
 
-        final List<GoveeLightResponse> responses = addresses.stream().peek(ip -> log.info("IP: {}", ip)).map(ip -> connectToLight(ip, buildStatus())).toList();
+        final List<GoveeLightResponse> responses = addresses.stream().peek(ip -> log.info("IP: {}", ip)).map(ip -> connectToLight(ip, buildControl(1))).toList();
         log.info("exit status");
     }
 
@@ -78,6 +78,10 @@ public class GoveeLightService {
 
     private static GoveeLightRequest buildStatus() {
         return GoveeLightRequest.builder().msg(GoveeLightRequest.GoveeLightMessage.builder().cmd("devStatus").data(GoveeLightRequest.GoveeLightMessage.GoveeLightData.builder().build()).build()).build();
+    }
+
+    private static GoveeLightRequest buildControl(final long status) {
+        return GoveeLightRequest.builder().msg(GoveeLightRequest.GoveeLightMessage.builder().cmd("devStatus").data(GoveeLightRequest.GoveeLightMessage.GoveeLightData.builder().value(status).build()).build()).build();
     }
 
 }
