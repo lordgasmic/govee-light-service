@@ -3,7 +3,10 @@ package com.lordgasmic.govee.service;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
 
 @Slf4j
 public class UDPServer implements Runnable {
@@ -14,12 +17,12 @@ public class UDPServer implements Runnable {
     public UDPServer(final int port) {
         try {
             // Bind the socket to the specified port
-            final InetAddress localhost = InetAddress.getByName("172.16.0.131");
-            socket = new DatagramSocket(port, localhost);
+//            final InetAddress localhost = InetAddress.getByName("172.16.0.131");
+            socket = new DatagramSocket(port);
             log.info("UDP Server started on ip: {}", socket.getInetAddress().getHostAddress());
 //            log.info("UDP Server started on host: {}", socket.getInetAddress().getHostName());
             log.info("UDP Server started on port {}", port);
-        } catch (final SocketException | UnknownHostException e) {
+        } catch (final SocketException e) {
             throw new RuntimeException(e);
         }
     }
