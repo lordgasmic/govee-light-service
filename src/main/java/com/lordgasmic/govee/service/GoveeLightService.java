@@ -41,6 +41,8 @@ public class GoveeLightService {
     public GoveeLightResponse connectToLight(final String ip, final GoveeLightRequest request) {
         try (final DatagramSocket clientSocket = new DatagramSocket()) {
             final InetAddress IPAddress = InetAddress.getByName(ip);
+            final InetAddress localhost = InetAddress.getByName("localhost");
+            final int listenPort = 4002;
             final int port = 4003;
 
             final String message = gson.toJson(request);
@@ -55,7 +57,7 @@ public class GoveeLightService {
 
             // Optional: Receive a response from the server
             final byte[] receiveData = new byte[1024];
-            final DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+            final DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length, localhost, listenPort);
             clientSocket.receive(receivePacket);
 
             log.info("received");
