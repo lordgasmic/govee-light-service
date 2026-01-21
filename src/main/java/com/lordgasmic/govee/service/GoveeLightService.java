@@ -44,22 +44,26 @@ public class GoveeLightService {
             final int port = 4003;
 
             final String message = gson.toJson(request);
+            log.info("message to send: {}", message);
             final byte[] sendData = message.getBytes();
 
             // Create packet with data, destination address, and port
             final DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
             clientSocket.send(sendPacket);
 
+            log.info("sent packet");
+
             // Optional: Receive a response from the server
             final byte[] receiveData = new byte[1024];
             final DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
             clientSocket.receive(receivePacket);
 
+            log.info("received");
             final String modifiedSentence = new String(receivePacket.getData(), 0, receivePacket.getLength());
             log.info("Response from Server: {}", modifiedSentence);
 
         } catch (final IOException e) {
-            e.printStackTrace();
+            log.error("Error trying to UDP", e);
         }
 
         return null;
