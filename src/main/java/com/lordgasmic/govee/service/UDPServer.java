@@ -15,7 +15,7 @@ public class UDPServer implements Runnable {
         try {
             // Bind the socket to the specified port
             final InetAddress localhost = InetAddress.getByName("0.0.0.0");
-            socket = new DatagramSocket(port);
+            socket = new DatagramSocket(port, localhost);
             log.info("UDP Server started on ip: {}", socket.getInetAddress().getHostAddress());
 //            log.info("UDP Server started on host: {}", socket.getInetAddress().getHostName());
             log.info("UDP Server started on port {}", port);
