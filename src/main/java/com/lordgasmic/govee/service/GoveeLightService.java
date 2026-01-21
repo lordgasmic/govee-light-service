@@ -81,7 +81,7 @@ public class GoveeLightService {
     }
 
     private static GoveeLightRequest buildControl(final long status) {
-        return GoveeLightRequest.builder().msg(GoveeLightRequest.GoveeLightMessage.builder().cmd("devStatus").data(GoveeLightRequest.GoveeLightMessage.GoveeLightData.builder().value(status).build()).build()).build();
+        return GoveeLightRequest.builder().msg(GoveeLightRequest.GoveeLightMessage.builder().cmd("turn").data(GoveeLightRequest.GoveeLightMessage.GoveeLightData.builder().value(status).build()).build()).build();
     }
 
 }
