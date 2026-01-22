@@ -3,7 +3,6 @@ package com.lordgasmic.govee.service;
 import com.google.gson.Gson;
 import com.lordgasmic.govee.models.GoveeLightRequest;
 import com.lordgasmic.govee.models.GoveeLightResponse;
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.integration.ip.udp.UnicastReceivingChannelAdapter;
@@ -35,18 +34,6 @@ public class GoveeLightService {
 
         statuses = new HashMap<>();
         gson = new Gson();
-    }
-
-    @PostConstruct
-    public void getCurrentLampStatus() {
-        // start UDP Server in background
-
-//        final UDPServer udpServer4002 = new UDPServer(4002);
-//        final Thread serverThread4002 = new Thread(udpServer4002);
-//        serverThread4002.start();
-
-        final List<GoveeLightResponse> responses = connectToLight(buildStatus());
-        log.info("exit status");
     }
 
     public List<GoveeLightResponse> connectToLight(final GoveeLightRequest request) {
