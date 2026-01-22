@@ -24,9 +24,13 @@ public class GoveeLightService {
     @Value("${govee.lights.lordgasmic}")
     private List<String> addresses;
 
+    private final LgcStatusCache cache;
+
     private final Gson gson;
 
-    public GoveeLightService() {
+    public GoveeLightService(final LgcStatusCache cache) {
+        this.cache = cache;
+
         gson = new Gson();
     }
 
@@ -54,6 +58,12 @@ public class GoveeLightService {
         } catch (final IOException e) {
             log.error("Error trying to UDP", e);
         }
+    }
+
+    public boolean statusOf(final String ip) {
+        final Boolean status = cache.getStatusCache().get(ip);
+
+        return status != null && status;
     }
 
     public static GoveeLightRequest buildStatus() {

@@ -11,6 +11,8 @@ import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.ip.dsl.Udp;
 
+import java.util.Objects;
+
 @Configuration
 @EnableIntegration
 @IntegrationComponentScan
@@ -35,11 +37,8 @@ public class UdpListenerConfig {
                 .handle((payload, headers) -> {
                     final String receivedMessage = new String((byte[]) payload).trim();
                     final GoveeLightResponse response = gson.fromJson(receivedMessage, GoveeLightResponse.class);
-
-                    log.info("Received message via DSL: {}", response);
-                    for (final String key : headers.keySet()) {
-                        log.info("{}: {}", key, headers.get(key));
-                    }
+                    final String ip = Objects.requireNonNull(headers.get("ip_address")).toString();
+                    cache.put(ip, response.getMsg().getData().getOnOff() == 1);
                     return null; // The adapter is for one-way communication
                 })
                 .get();
