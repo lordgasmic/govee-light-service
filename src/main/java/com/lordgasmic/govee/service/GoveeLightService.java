@@ -5,7 +5,6 @@ import com.lordgasmic.govee.models.GoveeLightRequest;
 import com.lordgasmic.govee.models.GoveeLightResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.integration.ip.udp.UnicastReceivingChannelAdapter;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,8 +19,6 @@ import java.util.Map;
 @Slf4j
 public class GoveeLightService {
 
-    private final UnicastReceivingChannelAdapter udpAdapter;
-
     @Value("${govee.lights.lordgasmic}")
     private List<String> addresses;
 
@@ -29,9 +26,7 @@ public class GoveeLightService {
 
     private final Gson gson;
 
-    public GoveeLightService(final UnicastReceivingChannelAdapter udpAdapter) {
-        this.udpAdapter = udpAdapter;
-
+    public GoveeLightService() {
         statuses = new HashMap<>();
         gson = new Gson();
     }
