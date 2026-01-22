@@ -45,15 +45,18 @@ public class GoveeLightService {
 //        final Thread serverThread4002 = new Thread(udpServer4002);
 //        serverThread4002.start();
 
-        final List<GoveeLightResponse> responses = addresses.stream().peek(ip -> log.info("IP: {}", ip)).map(ip -> connectToLight(ip, buildControl(1))).toList();
+        final List<GoveeLightResponse> responses = connectToLight(buildStatus());
         log.info("exit status");
     }
 
-    public GoveeLightResponse connectToLight(final String ip, final GoveeLightRequest request) {
+    public List<GoveeLightResponse> connectToLight(final GoveeLightRequest request) {
+        final List<GoveeLightResponse> responses = addresses.stream().peek(ip -> log.info("IP: {}", ip)).map(ip -> send(ip, request)).toList();
+        return responses;
+    }
+
+    private GoveeLightResponse send(final String ip, final GoveeLightRequest request) {
         try (final DatagramSocket clientSocket = new DatagramSocket()) {
             final InetAddress IPAddress = InetAddress.getByName(ip);
-            final InetAddress localhost = InetAddress.getByName("localhost");
-            final int listenPort = 4002;
             final int port = 4003;
 
             final String message = gson.toJson(request);
@@ -82,11 +85,11 @@ public class GoveeLightService {
         return null;
     }
 
-    private static GoveeLightRequest buildStatus() {
+    public static GoveeLightRequest buildStatus() {
         return GoveeLightRequest.builder().msg(GoveeLightRequest.GoveeLightMessage.builder().cmd("devStatus").data(GoveeLightRequest.GoveeLightMessage.GoveeLightData.builder().build()).build()).build();
     }
 
-    private static GoveeLightRequest buildControl(final long status) {
+    public static GoveeLightRequest buildControl(final long status) {
         return GoveeLightRequest.builder().msg(GoveeLightRequest.GoveeLightMessage.builder().cmd("turn").data(GoveeLightRequest.GoveeLightMessage.GoveeLightData.builder().value(status).build()).build()).build();
     }
 

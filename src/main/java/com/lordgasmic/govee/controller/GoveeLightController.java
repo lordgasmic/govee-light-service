@@ -17,7 +17,23 @@ public class GoveeLightController {
     @GetMapping("/api/v1/off")
     public ResponseEntity<Void> turnOff() {
 
-        service.connectToLight(null, null);
+        service.connectToLight(GoveeLightService.buildControl(0));
+
+        return ResponseEntity.accepted().build();
+    }
+
+    @GetMapping("/api/v1/on")
+    public ResponseEntity<Void> turnOn() {
+
+        service.connectToLight(GoveeLightService.buildControl(0));
+
+        return ResponseEntity.accepted().build();
+    }
+
+    @GetMapping("/api/v1/status")
+    public ResponseEntity<Void> getStatus() {
+
+        service.connectToLight(GoveeLightService.buildStatus());
 
         return ResponseEntity.accepted().build();
     }
