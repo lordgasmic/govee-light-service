@@ -1,4 +1,27 @@
 package com.lordgasmic.govee.models;
 
+import lombok.Data;
+
+@Data
 public class GoveeLightResponse {
+    private GoveeLightMessage msg;
 }
+
+
+
+
+
+/*
+
+{
+  "msg": {
+    "cmd": "devStatus",
+    "data": {
+      "onOff": 1,
+      "brightness": 100,
+      "color": { "r": 255, "g": 0, "b": 0 },
+      "colorTemInKelvin": 0
+    }
+  }
+}
+ */

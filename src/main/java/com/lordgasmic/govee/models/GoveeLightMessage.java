@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class GoveeLightRequest {
+public class GoveeLightMessage {
 
-    private GoveeLightMessage msg;
+    private String cmd;
+    private GoveeLightData data;
 }
