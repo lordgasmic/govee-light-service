@@ -37,6 +37,12 @@ public class GoveeLightService {
     public void connectToLight(final GoveeLightRequest request) {
         if (!request.getMsg().getCmd().equals(DEV_STATUS)) {
             addresses.stream().peek(ip -> log.info("IP: {}", ip)).forEach(ip -> send(ip, request));
+
+            try {
+                Thread.sleep(50);
+            } catch (final InterruptedException e) {
+                log.error("Error trying to sleep", e);
+            }
         }
 
         addresses.stream().peek(ip -> log.info("IP: {}", ip)).forEach(ip -> send(ip, buildStatus()));
@@ -63,6 +69,7 @@ public class GoveeLightService {
     public boolean statusOf(final String ip) {
         final Boolean status = cache.getStatusCache().get(ip);
 
+        log.info("status: {}", status);
         return status != null && status;
     }
 
