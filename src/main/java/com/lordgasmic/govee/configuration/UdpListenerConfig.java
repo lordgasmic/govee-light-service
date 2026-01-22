@@ -26,32 +26,6 @@ public class UdpListenerConfig {
         gson = new Gson();
     }
 
-//    // 1. Define the input channel where received packets will be sent
-//    @Bean
-//    public MessageChannel udpChannel() {
-//        return new DirectChannel();
-//    }
-//
-//    // 2. Configure the inbound UDP adapter
-//    @Bean
-//    public UnicastReceivingChannelAdapter udpInboundAdapter() {
-//        final UnicastReceivingChannelAdapter adapter = new UnicastReceivingChannelAdapter(UDP_PORT);
-//        adapter.setOutputChannelName("udpChannel");
-//        return adapter;
-//    }
-//
-//    // 3. Define a service activator to handle the incoming messages
-//    @ServiceActivator(inputChannel = "udpChannel")
-//    public void handleUdpMessage(final byte[] messagePayload) {
-//        // The payload is a byte array; convert it to a string for processing
-//        final String receivedMessage = new String(messagePayload).trim();
-//        System.out.println("Received message: " + receivedMessage);
-//        // You can add further processing logic here
-//
-//        GoveeLightResponse response = gson.fromJson(receivedMessage, GoveeLightResponse.class);
-//
-//    }
-
     @Bean
     public IntegrationFlow udpInboundFlow() {
         return IntegrationFlow.from(Udp.inboundAdapter(UDP_PORT))

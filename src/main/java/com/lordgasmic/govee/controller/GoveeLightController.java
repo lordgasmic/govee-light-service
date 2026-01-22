@@ -25,7 +25,7 @@ public class GoveeLightController {
     @GetMapping("/api/v1/on")
     public ResponseEntity<Void> turnOn() {
 
-        service.connectToLight(GoveeLightService.buildControl(0));
+        service.connectToLight(GoveeLightService.buildControl(1));
 
         return ResponseEntity.accepted().build();
     }
