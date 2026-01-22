@@ -38,7 +38,7 @@ public class UdpListenerConfig {
 
                     log.info("Received message via DSL: {}", response);
                     for (final String key : headers.keySet()) {
-                        log.info("key: {}", key);
+                        log.info("{}: {}", key, headers.get(key));
                     }
                     return null; // The adapter is for one-way communication
                 })
