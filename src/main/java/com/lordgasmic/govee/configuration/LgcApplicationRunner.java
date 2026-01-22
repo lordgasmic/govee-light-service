@@ -8,7 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class LgcApplicationRunner implements ApplicationRunner {
 
-    private GoveeLightService service;
+    private final GoveeLightService service;
+
+    public LgcApplicationRunner(final GoveeLightService service) {
+        this.service = service;
+    }
+
 
     @Override
     public void run(final ApplicationArguments args) throws Exception {
