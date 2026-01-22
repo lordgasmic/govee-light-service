@@ -29,7 +29,7 @@ public class GoveeLightController {
         return ResponseEntity.accepted().build();
     }
 
-    @GetMapping("/api/v1/status/{ip")
+    @GetMapping("/api/v1/status/{ip}")
     public ResponseEntity<Boolean> getStatus(@PathVariable final String ip) {
         final boolean status = service.statusOf(ip);
 
